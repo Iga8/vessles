@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="msdb2773Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="History">
+          <Key>
+            <PropertyRef Name="HistoryId" />
+          </Key>
+          <Property Name="HistoryId" Type="int" Nullable="false" />
+          <Property Name="Lat" Type="float" />
+          <Property Name="Lon" Type="float" />
+          <Property Name="VesselId" Type="int" />
+        </EntityType>
+        <EntityType Name="Port">
+          <Key>
+            <PropertyRef Name="PortId" />
+          </Key>
+          <Property Name="PortId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="10" />
+          <Property Name="Location" Type="nchar" MaxLength="10" />
+          <Property Name="Lat" Type="float" />
+          <Property Name="Lon" Type="float" />
+          <Property Name="VesselId" Type="int" />
+        </EntityType>
+        <EntityType Name="Vessel">
+          <Key>
+            <PropertyRef Name="VesselId" />
+          </Key>
+          <Property Name="VesselId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="10" />
+          <Property Name="Type" Type="nchar" MaxLength="10" />
+          <Property Name="CallSignal" Type="int" />
+          <Property Name="Device" Type="nchar" MaxLength="10" />
+          <Property Name="Draught" Type="nchar" MaxLength="10" />
+          <Property Name="Mmsi" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="VesselMovment">
+          <Key>
+            <PropertyRef Name="MovmentId" />
+          </Key>
+          <Property Name="MovmentId" Type="int" Nullable="false" />
+          <Property Name="Course" Type="int" />
+          <Property Name="Radio" Type="int" />
+          <Property Name="Speed" Type="int" />
+          <Property Name="ShipStatus" Type="nchar" MaxLength="50" />
+          <Property Name="Lat" Type="float" />
+          <Property Name="Lon" Type="float" />
+          <Property Name="VesselID" Type="int" />
+        </EntityType>
+        <Association Name="FK__History__VesselI__59063A47">
+          <End Role="Vessel" Type="Self.Vessel" Multiplicity="0..1" />
+          <End Role="History" Type="Self.History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vessel">
+              <PropertyRef Name="VesselId" />
+            </Principal>
+            <Dependent Role="History">
+              <PropertyRef Name="VesselId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Port__VesselId__5CD6CB2B">
+          <End Role="Vessel" Type="Self.Vessel" Multiplicity="0..1" />
+          <End Role="Port" Type="Self.Port" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vessel">
+              <PropertyRef Name="VesselId" />
+            </Principal>
+            <Dependent Role="Port">
+              <PropertyRef Name="VesselId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VesselMov__Vesse__5535A963">
+          <End Role="Vessel" Type="Self.Vessel" Multiplicity="0..1" />
+          <End Role="VesselMovment" Type="Self.VesselMovment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vessel">
+              <PropertyRef Name="VesselId" />
+            </Principal>
+            <Dependent Role="VesselMovment">
+              <PropertyRef Name="VesselID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="msdb2773ModelStoreContainer">
+          <EntitySet Name="History" EntityType="Self.History" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Port" EntityType="Self.Port" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vessel" EntityType="Self.Vessel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VesselMovment" EntityType="Self.VesselMovment" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__History__VesselI__59063A47" Association="Self.FK__History__VesselI__59063A47">
+            <End Role="Vessel" EntitySet="Vessel" />
+            <End Role="History" EntitySet="History" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Port__VesselId__5CD6CB2B" Association="Self.FK__Port__VesselId__5CD6CB2B">
+            <End Role="Vessel" EntitySet="Vessel" />
+            <End Role="Port" EntitySet="Port" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VesselMov__Vesse__5535A963" Association="Self.FK__VesselMov__Vesse__5535A963">
+            <End Role="Vessel" EntitySet="Vessel" />
+            <End Role="VesselMovment" EntitySet="VesselMovment" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="msdb2773Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="History">
+          <Key>
+            <PropertyRef Name="HistoryId" />
+          </Key>
+          <Property Name="HistoryId" Type="Int32" Nullable="false" />
+          <Property Name="Lat" Type="Double" />
+          <Property Name="Lon" Type="Double" />
+          <Property Name="VesselId" Type="Int32" />
+          <NavigationProperty Name="Vessel" Relationship="Self.FK__History__VesselI__59063A47" FromRole="History" ToRole="Vessel" />
+        </EntityType>
+        <EntityType Name="Port">
+          <Key>
+            <PropertyRef Name="PortId" />
+          </Key>
+          <Property Name="PortId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Location" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Lat" Type="Double" />
+          <Property Name="Lon" Type="Double" />
+          <Property Name="VesselId" Type="Int32" />
+          <NavigationProperty Name="Vessel" Relationship="Self.FK__Port__VesselId__5CD6CB2B" FromRole="Port" ToRole="Vessel" />
+        </EntityType>
+        <EntityType Name="Vessel">
+          <Key>
+            <PropertyRef Name="VesselId" />
+          </Key>
+          <Property Name="VesselId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="CallSignal" Type="Int32" />
+          <Property Name="Device" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Draught" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Mmsi" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Histories" Relationship="Self.FK__History__VesselI__59063A47" FromRole="Vessel" ToRole="History" />
+          <NavigationProperty Name="Ports" Relationship="Self.FK__Port__VesselId__5CD6CB2B" FromRole="Vessel" ToRole="Port" />
+          <NavigationProperty Name="VesselMovments" Relationship="Self.FK__VesselMov__Vesse__5535A963" FromRole="Vessel" ToRole="VesselMovment" />
+        </EntityType>
+        <EntityType Name="VesselMovment">
+          <Key>
+            <PropertyRef Name="MovmentId" />
+          </Key>
+          <Property Name="MovmentId" Type="Int32" Nullable="false" />
+          <Property Name="Course" Type="Int32" />
+          <Property Name="Radio" Type="Int32" />
+          <Property Name="Speed" Type="Int32" />
+          <Property Name="ShipStatus" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Lat" Type="Double" />
+          <Property Name="Lon" Type="Double" />
+          <Property Name="VesselID" Type="Int32" />
+          <NavigationProperty Name="Vessel" Relationship="Self.FK__VesselMov__Vesse__5535A963" FromRole="VesselMovment" ToRole="Vessel" />
+        </EntityType>
+        <Association Name="FK__History__VesselI__59063A47">
+          <End Role="Vessel" Type="Self.Vessel" Multiplicity="0..1" />
+          <End Role="History" Type="Self.History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vessel">
+              <PropertyRef Name="VesselId" />
+            </Principal>
+            <Dependent Role="History">
+              <PropertyRef Name="VesselId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Port__VesselId__5CD6CB2B">
+          <End Role="Vessel" Type="Self.Vessel" Multiplicity="0..1" />
+          <End Role="Port" Type="Self.Port" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vessel">
+              <PropertyRef Name="VesselId" />
+            </Principal>
+            <Dependent Role="Port">
+              <PropertyRef Name="VesselId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VesselMov__Vesse__5535A963">
+          <End Role="Vessel" Type="Self.Vessel" Multiplicity="0..1" />
+          <End Role="VesselMovment" Type="Self.VesselMovment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vessel">
+              <PropertyRef Name="VesselId" />
+            </Principal>
+            <Dependent Role="VesselMovment">
+              <PropertyRef Name="VesselID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="msdb2773Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Histories" EntityType="Self.History" />
+          <EntitySet Name="Ports" EntityType="Self.Port" />
+          <EntitySet Name="Vessels" EntityType="Self.Vessel" />
+          <EntitySet Name="VesselMovments" EntityType="Self.VesselMovment" />
+          <AssociationSet Name="FK__History__VesselI__59063A47" Association="Self.FK__History__VesselI__59063A47">
+            <End Role="Vessel" EntitySet="Vessels" />
+            <End Role="History" EntitySet="Histories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Port__VesselId__5CD6CB2B" Association="Self.FK__Port__VesselId__5CD6CB2B">
+            <End Role="Vessel" EntitySet="Vessels" />
+            <End Role="Port" EntitySet="Ports" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VesselMov__Vesse__5535A963" Association="Self.FK__VesselMov__Vesse__5535A963">
+            <End Role="Vessel" EntitySet="Vessels" />
+            <End Role="VesselMovment" EntitySet="VesselMovments" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="msdb2773ModelStoreContainer" CdmEntityContainer="msdb2773Entities">
+          <EntitySetMapping Name="Histories">
+            <EntityTypeMapping TypeName="msdb2773Model.History">
+              <MappingFragment StoreEntitySet="History">
+                <ScalarProperty Name="HistoryId" ColumnName="HistoryId" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Lon" ColumnName="Lon" />
+                <ScalarProperty Name="VesselId" ColumnName="VesselId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ports">
+            <EntityTypeMapping TypeName="msdb2773Model.Port">
+              <MappingFragment StoreEntitySet="Port">
+                <ScalarProperty Name="PortId" ColumnName="PortId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Lon" ColumnName="Lon" />
+                <ScalarProperty Name="VesselId" ColumnName="VesselId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vessels">
+            <EntityTypeMapping TypeName="msdb2773Model.Vessel">
+              <MappingFragment StoreEntitySet="Vessel">
+                <ScalarProperty Name="VesselId" ColumnName="VesselId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="CallSignal" ColumnName="CallSignal" />
+                <ScalarProperty Name="Device" ColumnName="Device" />
+                <ScalarProperty Name="Draught" ColumnName="Draught" />
+                <ScalarProperty Name="Mmsi" ColumnName="Mmsi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VesselMovments">
+            <EntityTypeMapping TypeName="msdb2773Model.VesselMovment">
+              <MappingFragment StoreEntitySet="VesselMovment">
+                <ScalarProperty Name="MovmentId" ColumnName="MovmentId" />
+                <ScalarProperty Name="Course" ColumnName="Course" />
+                <ScalarProperty Name="Radio" ColumnName="Radio" />
+                <ScalarProperty Name="Speed" ColumnName="Speed" />
+                <ScalarProperty Name="ShipStatus" ColumnName="ShipStatus" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Lon" ColumnName="Lon" />
+                <ScalarProperty Name="VesselID" ColumnName="VesselID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

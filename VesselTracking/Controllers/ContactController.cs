@@ -6,13 +6,12 @@ using System.Web.Mvc;
 
 namespace Vessesls.Controllers
 {
-    public class MapController : Controller
+    public class ContactController : Controller
     {
-        public ActionResult Index()
+        // GET: Contact
+        public ActionResult ContactUs()
         {
-            return View("Index");
+            return View();
         }
-
-       
     }
 }

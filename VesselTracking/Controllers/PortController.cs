@@ -6,13 +6,12 @@ using System.Web.Mvc;
 
 namespace Vessesls.Controllers
 {
-    public class MapController : Controller
+    public class PortController : Controller
     {
-        public ActionResult Index()
+        // GET: Port
+        public ActionResult Port()
         {
-            return View("Index");
+            return View();
         }
-
-       
     }
 }

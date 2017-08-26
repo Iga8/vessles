@@ -6,13 +6,12 @@ using System.Web.Mvc;
 
 namespace Vessesls.Controllers
 {
-    public class MapController : Controller
+    public class VesselsController : Controller
     {
-        public ActionResult Index()
+        // GET: Vessels
+        public ActionResult Vessels ()
         {
-            return View("Index");
+            return View();
         }
-
-       
     }
 }
